@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/asishrs/smartthings-ringalarmv2/httputil"
-	"github.com/asishrs/smartthings-ringalarmv2/public"
-	"github.com/asishrs/smartthings-ringalarmv2/wsutil"
+	"github.com/jhstroebel/smartthings-ringalarmv2/httputil"
+	"github.com/jhstroebel/smartthings-ringalarmv2/public"
+	"github.com/jhstroebel/smartthings-ringalarmv2/wsutil"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 )
