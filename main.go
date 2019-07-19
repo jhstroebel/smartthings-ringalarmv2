@@ -121,6 +121,22 @@ func setStatus(apiRequest public.Request, status string) (events.APIGatewayProxy
 	}, nil
 }
 
+func setLockStatus(apiRequest public.Request, command string) (events.APIGatewayProxyResponse, error) {
+	accessToken, _ := getAccessToken(apiRequest)
+	locationID := getLocationId(apiRequest, accessToken)
+	zID, err := getZID(apiRequest)
+	if err != nil {
+		return clientError(http.StatusInternalServerError)
+	}
+
+	connection := httputil.ConnectionRequest("https://app.ring.com/api/v1/rs/connections", locationID, accessToken)
+	wsutil.LockStatus(zID, command, connection)
+	return events.APIGatewayProxyResponse{
+		StatusCode: 200,
+		Body:       "{\"message\": \"Success\"}",
+	}, nil
+}
+
 func getMetaData(apiRequest public.Request) (events.APIGatewayProxyResponse, error) {
 	accessToken, _ := getAccessToken(apiRequest)
 	locationID := getLocationId(apiRequest, accessToken)
@@ -165,6 +181,11 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		return setStatus(apiRequest, "none")
 	case "meta":
 		return getMetaData(apiRequest)
+//lock cases
+	case "lock":
+		return setLockStatus(apiRequest, "lock")
+	case "unlock":
+		return setLockStatus(apiRequest, "unlock")
 	default:
 		return clientError(http.StatusUnprocessableEntity)
 	}

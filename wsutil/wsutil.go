@@ -58,6 +58,36 @@ func Status(zid string, mode string, connection httputil.RingWSConnection) (stri
 	return "SUCCESS", nil
 }
 
+func LockStatus(zid string, command string, connection httputil.RingWSConnection) (string, error) {
+	wssInput := "42[\n" +
+		"    \"message\",\n" +
+		"    {\n" +
+		"        \"msg\": \"DeviceInfoSet\",\n" +
+		"        \"datatype\": \"DeviceInfoSetType\",\n" +
+		"        \"body\": [\n" +
+		"            {\n" +
+		"                \"zid\": \"" + zid + "\",\n" +
+		"                \"command\": {\n" +
+		"                    \"v1\": [\n" +
+		"                        {\n" +
+		"                            \"commandType\": \"lock." + command + "\",\n" +
+		"                            \"data\": {\n" +
+		"                            }\n" +
+		"                        }\n" +
+		"                    ]\n" +
+		"                }\n" +
+		"            }\n" +
+		"        ],\n" +
+		"        \"seq\": 2\n" +
+		"    }\n" +
+		"]"
+
+	// log.Println("WS Connection " + wssInput)
+	wssCall(connection, wssInput, "DataUpdate", 1)
+
+	return "SUCCESS", nil
+}
+
 func wsConnection(connection httputil.RingWSConnection) (string, error) {
 	wsConnectionTemplate := template.New("wscon")
 	wsConnectionTemplate, tmplErr := wsConnectionTemplate.Parse("wss://{{.Server}}/socket.io/?authcode={{.AuthCode}}&ack=false&EIO=3&transport=websocket")
