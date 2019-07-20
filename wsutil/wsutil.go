@@ -11,7 +11,7 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/asishrs/smartthings-ringalarmv2/httputil"
+	"github.com/jhstroebel/smartthings-ringalarmv2/httputil"
 	"github.com/gorilla/websocket"
 )
 
