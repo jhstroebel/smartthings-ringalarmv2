@@ -11,5 +11,5 @@ deploy:
   file: 'deployment.zip'
   skip_cleanup: true
   on:
-    repo: asishrs/smartthings-ringalarmv2
+    repo: jhstroebel/smartthings-ringalarmv2
     tags: true
