@@ -89,6 +89,7 @@ type V1 struct {
 	PanID   int    `json:"panId"`
 	Faulted bool   `json:"faulted"`
 	Mode    string `json:"mode"`
+	Locked  string `json:"locked"`
 }
 
 type Adapter struct {
@@ -177,7 +178,7 @@ func AccessTokenRequest(url string, exchangeRequest ExchangeRequest) ExchangeRes
 	responseBody := post(url, headers, requestByte)
 	var exchangeResponse ExchangeResponse
 	json.Unmarshal(responseBody, &exchangeResponse)
-	// log.Println("Access Token " + exchangeResponse.AccessToken)
+	// log.Println("Access Token %v", + exchangeResponse.AccessToken)
 	return exchangeResponse
 }
 
@@ -257,5 +258,6 @@ func post(url string, headers map[string]string, requestBody []byte) []byte {
 	}
 	defer res.Body.Close()
 	responseBody, _ := ioutil.ReadAll(res.Body)
+	// log.Printf("Url - %v, Header - %v", url, headers)
 	return responseBody
 }
