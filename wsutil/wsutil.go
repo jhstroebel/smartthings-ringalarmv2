@@ -11,8 +11,8 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/jhstroebel/smartthings-ringalarmv2/httputil"
 	"github.com/gorilla/websocket"
+	"github.com/jhstroebel/smartthings-ringalarmv2/httputil"
 )
 
 // RingDeviceInfo represents the raw websocket respone from Ring Alarm WebService
@@ -177,7 +177,7 @@ func ActiveDevices(connection httputil.RingWSConnection) (*RingDeviceInfo, error
 	runes := []rune(wssResponse)
 	responseBody := string(runes[13 : len(wssResponse)-1])
 	//log.Printf("Response: %s\n\nJSON: %s", wssResponse, responseBody)
-	log.Printf("Response: %s", responseBody)
+	//log.Printf("Response: %s", responseBody)
 	err = json.Unmarshal([]byte(responseBody), &ringDeviceInfo)
 	if err != nil {
 		log.Fatal("Unable to Parse Status Response Data: ", err)
