@@ -1,5 +1,10 @@
 package public
 
+type AuthRequest struct {
+	User     string `json:"user"`
+	Password string `json:"password"`
+}
+
 type Request struct {
 	User         string `json:"user"`
 	Password     string `json:"password"`
@@ -14,6 +19,13 @@ type RingDeviceStatus struct {
 	Type    string `json:"type"`
 	Faulted bool   `json:"faulted"`
 	Mode    string `json:"mode"`
+}
+
+type RingLockStatus struct {
+	Name   string `json:"name"`
+	ZID    string `json:"zid"`
+	Type   string `json:"type"`
+	Status string `json:"status"`
 }
 
 type RingDeviceEvent struct {
